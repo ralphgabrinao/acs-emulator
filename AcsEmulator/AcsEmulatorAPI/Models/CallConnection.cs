@@ -63,6 +63,7 @@ namespace AcsEmulatorAPI.Models
                     Id = Guid.NewGuid(),
                     RawId = target.CommunicationUser?.Id,
                     PhoneNumber = target.PhoneNumber?.Value,
+                    Kind = target.Kind,
                     CallConnection = this
                 };
                 Targets.Add(callConnectionTarget);
@@ -77,6 +78,8 @@ namespace AcsEmulatorAPI.Models
         public string RawId { get; set; }
 
         public string PhoneNumber { get; set; }
+
+        public CommunicationIdentifierKind Kind { get; set; }
 
         public virtual CallConnection CallConnection { get; set; }
     }

@@ -26,7 +26,10 @@ namespace AcsEmulatorAPI.Models
         {
             builder.Entity<ChatMessage>().ToTable("ChatMessages");
 			builder.Entity<AddParticipantsChatMessage>().ToTable("AddParticipantsChatMessages");
-            builder.Entity<CallConnectionTarget>().ToTable("CallConnectionTargets");
+            builder.Entity<CallConnectionTarget>()
+                .ToTable("CallConnectionTargets")
+                .Property(u => u.Kind)
+                .HasConversion<string>();
 
 			builder.Entity<ChatThread>()
                 .HasOne(t => t.CreatedBy)
