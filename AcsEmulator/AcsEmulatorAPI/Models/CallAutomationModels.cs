@@ -14,18 +14,16 @@ namespace AcsEmulatorAPI.Models
 
     public record CallIntelligenceOptions(string CognitiveServicesEndpoint);
 
-    public record CallConnectionCreation(CallConnectionProperties CallConnectionProperties);
-
     public record CallConnectionProperties(
         Guid CallConnectionId,
         string CallbackUri,
         List<CommunicationIdentifier> Targets,
         CallConnectionState CallConnectionState,
-        string? AnsweredBy,
+        CommunicationUser? AnsweredBy,
         string? CorrelationId,
         string? ServerCallId,
-        string? Source,
-        string? SourceCallerIdNumber,
+        CommunicationIdentifier? Source,
+        PhoneNumber? SourceCallerIdNumber,
         string? SourceDisplayName);
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -86,4 +84,86 @@ namespace AcsEmulatorAPI.Models
         string customVoiceEndpointId);
 
     public record PlayOptions(bool loop);
+
+    public record RecognizeRequest(
+        RecognizeInputType recognizeInputType,
+        PlaySource playPrompt,
+        bool interruptCallMediaOperation,
+        RecognizeOptions recognizeOptions,
+        string operationContext,
+        string operationCallbackUri);
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum RecognizeInputType
+    {
+        [EnumMember(Value = "dtmf")]
+        Dtmf,
+        [EnumMember(Value = "speech")]
+        Speech,
+        [EnumMember(Value = "speechOrDtmf")]
+        SpeechOrDtmf,
+        [EnumMember(Value = "choices")]
+        Choices,
+    }
+
+    public record RecognizeOptions(
+        CommunicationIdentifier targetParticipant,
+        bool interruptPrompt,
+        int initialSilenceTimeoutInSeconds,
+        string speechLanguage,
+        string speechRecognitionModelEndpointId,
+        DtmfOptions dtmfOptions,
+        List<Choice> choices,
+        SpeechOptions speechOptions);
+
+    public record DtmfOptions(
+        int interToneTimeoutInSeconds,
+        int maxTonesToCollect,
+        List<Tone> stopTones);
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum Tone
+    {
+        [EnumMember(Value = "zero")]
+        Zero,
+        [EnumMember(Value = "one")]
+        One,
+        [EnumMember(Value = "two")]
+        Two,
+        [EnumMember(Value = "three")]
+        Three,
+        [EnumMember(Value = "four")]
+        Four,
+        [EnumMember(Value = "five")]
+        Five,
+        [EnumMember(Value = "six")]
+        Six,
+        [EnumMember(Value = "seven")]
+        Seven,
+        [EnumMember(Value = "eight")]
+        Eight,
+        [EnumMember(Value = "nine")]
+        Nine,
+        [EnumMember(Value = "a")]
+        A,
+        [EnumMember(Value = "b")]
+        B,
+        [EnumMember(Value = "c")]
+        C,
+        [EnumMember(Value = "d")]
+        D,
+        [EnumMember(Value = "pound")]
+        Pound,
+        [EnumMember(Value = "asterisk")]
+        Asterisk
+    }
+
+    public record Choice(
+        string label,
+        List<string> phrases,
+        Tone tone);
+
+    public record SpeechOptions(
+        int endSilenceTimeoutInMs);
+
 }
