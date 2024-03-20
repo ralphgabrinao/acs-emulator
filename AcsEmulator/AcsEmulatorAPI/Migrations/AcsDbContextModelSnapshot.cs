@@ -46,7 +46,7 @@ namespace AcsEmulatorAPI.Migrations
 
                     b.HasIndex("ParticipantRawId");
 
-                    b.ToTable("AddedParticipant");
+                    b.ToTable("AddedParticipant", (string)null);
                 });
 
             modelBuilder.Entity("AcsEmulatorAPI.Models.CallConnection", b =>
@@ -86,7 +86,7 @@ namespace AcsEmulatorAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CallConnections");
+                    b.ToTable("CallConnections", (string)null);
                 });
 
             modelBuilder.Entity("AcsEmulatorAPI.Models.CallConnectionTarget", b =>
@@ -96,10 +96,6 @@ namespace AcsEmulatorAPI.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("CallConnectionId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Kind")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNumber")
@@ -176,10 +172,10 @@ namespace AcsEmulatorAPI.Migrations
 
                     b.HasIndex("CreatedByRawId");
 
-                    b.ToTable("ChatThreads");
+                    b.ToTable("ChatThreads", (string)null);
                 });
 
-            modelBuilder.Entity("AcsEmulatorAPI.Models.EmailMessageInternal", b =>
+            modelBuilder.Entity("AcsEmulatorAPI.Models.EmailMessage", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
@@ -222,7 +218,7 @@ namespace AcsEmulatorAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmailMessages");
+                    b.ToTable("EmailMessages", (string)null);
                 });
 
             modelBuilder.Entity("AcsEmulatorAPI.Models.EmailMessageAttachment", b =>
@@ -246,7 +242,7 @@ namespace AcsEmulatorAPI.Migrations
 
                     b.HasIndex("EmailMessageId");
 
-                    b.ToTable("EmailMessageAttachment");
+                    b.ToTable("EmailMessageAttachment", (string)null);
                 });
 
             modelBuilder.Entity("AcsEmulatorAPI.Models.SmsMessage", b =>
@@ -271,7 +267,7 @@ namespace AcsEmulatorAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SmsMessages");
+                    b.ToTable("SmsMessages", (string)null);
                 });
 
             modelBuilder.Entity("AcsEmulatorAPI.Models.User", b =>
@@ -282,7 +278,7 @@ namespace AcsEmulatorAPI.Migrations
 
                     b.HasKey("RawId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("AcsEmulatorAPI.Models.UserChatThread", b =>
@@ -303,7 +299,7 @@ namespace AcsEmulatorAPI.Migrations
 
                     b.HasIndex("ChatThreadId");
 
-                    b.ToTable("UserChatThread");
+                    b.ToTable("UserChatThread", (string)null);
                 });
 
             modelBuilder.Entity("AcsEmulatorAPI.Models.AddParticipantsChatMessage", b =>
@@ -361,7 +357,7 @@ namespace AcsEmulatorAPI.Migrations
 
             modelBuilder.Entity("AcsEmulatorAPI.Models.EmailMessageAttachment", b =>
                 {
-                    b.HasOne("AcsEmulatorAPI.Models.EmailMessageInternal", null)
+                    b.HasOne("AcsEmulatorAPI.Models.EmailMessage", null)
                         .WithMany("Attachments")
                         .HasForeignKey("EmailMessageId");
                 });
@@ -406,7 +402,7 @@ namespace AcsEmulatorAPI.Migrations
                     b.Navigation("UserChatThreads");
                 });
 
-            modelBuilder.Entity("AcsEmulatorAPI.Models.EmailMessageInternal", b =>
+            modelBuilder.Entity("AcsEmulatorAPI.Models.EmailMessage", b =>
                 {
                     b.Navigation("Attachments");
                 });
